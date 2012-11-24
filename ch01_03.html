@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>My first jQuery Mobile code</title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css">
+        <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <div data-role="page" id="page1">
+            <div data-role="header">
+                <h1>First page</h1>
+            </div>
+            <div data-role="content">
+                <p>This is the main content of the page.</p>
+                <p>You can go to the <a href="#page2">second page</a>.</p>
+            </div>
+            <div data-role="footer">
+                <h4>mobilexweb.com</h4>
+            </div>
+        </div>
+        <div data-role="page" id="page2" data-title="This is the second page">
+            <div data-role="header">
+                <h1>Second page</h1>
+            </div>
+            <div data-role="content">
+                <p>This is the main content of the second page.</p>
+                <p>You can go back using the header's button, <a href="#page1">clicking here</a>
+                    or using your browser's back button.</p>
+            </div>
+            <div data-role="footer">
+                <h4>mobilexweb.com</h4>
+            </div>
+        </div>
+    </body>
+</html>
