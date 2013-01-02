@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My first jQuery Mobile code</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <!-- activate back buttons with the addBackBtn option of the page plugin-->
+    <script type="text/javascript">
+        $(document).bind("mobileinit", function() {
+            $.mobile.page.prototype.options.addBackBtn = true;
+        });
+    </script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div data-role="page" id="home" data-add-back-btn="false">
+        <div data-role="header">
+            <h1>nested lists</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li><a href="order.html">Order now!</a></li>
+                <li>Cities available
+                    <ul data-role="listview">
+                        <li>Boston</li>
+                        <li>New York</li>
+                        <li>Miami</li>
+                        <li>San Francisco</li>
+                        <li>San Jose</li>
+                    </ul>
+                </li>
+                <li>Topics
+                    <ul data-role="listview">
+                        <li>Intro to mobile web
+                            <ul data-role="listview">
+                                <li>WML and other oldies</li>
+                                <li>XHTML MP</li>
+                                <li>HTML 4.01</li>
+                                <li>HTML5</li>
+                            </ul>
+                        </li>
+                        <li>Mobile browsers
+                            <ul data-role="listview">
+                                <li>Safari for iOS</li>
+                                <li>Android browser</li>
+                                <li>Firefox for mobile</li>
+                                <li>Opera</li>
+                            </ul>
+                        </li>
+                        <li>Tablet browsers</li>
+                        <li>Using jQuery</li>
+                    </ul>
+                </li>
+                <li>Promotions
+                    <ul data-role="listview">
+                        <li>10% off before may</li>
+                        <li><a href="promo3x2.html">3x2</a></li>
+                        <li>10% off to subscribers</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div data-role="footer">
+            <h1>www.goodcleanfun.de</h1>
+        </div>
+    </div>
+</body>
+</html>
