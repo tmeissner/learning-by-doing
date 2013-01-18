@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My first jQuery Mobile code</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div data-role="page" id="home">
+        <div data-role="header">
+            <h1>Form with multiple select menu</h1>
+        </div>
+        <form action="wurst.php" method="get">
+            <div data-role="fieldcontain">
+                <div data-role="controlgroup" data-type="horizontal">
+                    <legend>Delivery options</legend>
+                    <label for="weekday">Weekday</label>
+                    <select id="weekday" name="weekday">
+                        <option value="1">Mon</option>
+                        <option value="2">Tue</option>
+                        <option value="3">Wed</option>
+                        <option value="4">Thu</option>
+                        <option value="5">Fri</option>
+                    </select>
+                    <label for="time">Time</label>
+                    <select id="time" name="time">
+                        <option value="1">Morning</option>
+                        <option value="2">Midday</option>
+                        <option value="3">Afternoon</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" name="submit" value="submit-value">Submit</button>
+        </form>
+        <div data-role="footer">
+            <h1>www.goodcleanfun.de</h1>
+        </div>
+    </div>
+</body>
+</html>
