@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My first jQuery Mobile code</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div data-role="page" id="home">
+        <div data-role="header">
+            <h1>Form with various checkboxes</h1>
+        </div>
+        <form action="wurst.php" method="get">
+            <div data-role="fieldcontain">
+                <label for="accept">I accept terms and conditions</label>
+                <input type="checkbox" id="accept" name="accept" value="yes">
+            </div>
+            <legend>Delivery options</legend>
+            <div data-role="controlgroup">
+                <label for="optionGift">Pack it as a gift</label>
+                <input type="checkbox" id="optionGift" name="optionGift" value="gift">
+                <label for="optionBag">Send it with a bag</label>
+                <input type="checkbox" id="optionBag" name="optionBag" value="bag">
+                <label for="optionRemove">Remove the box</label>
+                <input type="checkbox" id="optionRemove" name="optionRemove" value="remove">
+            </div>
+            <legend>Text format</legend>
+            <div data-role="controlgroup" data-type="horizontal">
+                <label for="bold">B</label>
+                <input type="checkbox" id="bold" name="bold" value="bold">
+                <label for="italic">I</label>
+                <input type="checkbox" id="italic" name="italic" value="italic">
+                <label for="underline">U</label>
+                <input type="checkbox" id="underline" name="underline" value="underline">
+            </div>
+            <button type="submit" name="submit" value="submit-value">Submit</button>
+        </form>
+        <div data-role="footer">
+            <h1>www.goodcleanfun.de</h1>
+        </div>
+    </div>
+</body>
+</html>
