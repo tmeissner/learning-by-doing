@@ -46,6 +46,7 @@ char *trim(char *phrase) {
     char *old = phrase;
     char *new = phrase;
 
+    // skip blank chars
     while (*old == ' ') {
         old++;
     }
@@ -56,14 +57,20 @@ char *trim(char *phrase) {
         old++;
     }
 
+    // set string end char
     *new = 0;
+
     return (char*) realloc(phrase, strlen(phrase) + 1);
 }
 
 
 int main(void) {
 
+    // this is wrong -> realloc in trim() on array which wasn't malloc'ed
+    // char blub[] = "    wurstgesicht";
+    // printf("%s\n", trim(blub));
 
+    // by using return value of getline(), we got an array which was malloc'ed
     char *buffer = trim(getLine());
 
     if (buffer == NULL) {
