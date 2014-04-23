@@ -14,14 +14,13 @@ char *getLine(void) {
     char *currentPosition = buffer;
     size_t maximumLength = sizeIncrement;
     size_t length = 0;
-    int character;
 
     if (currentPosition == NULL) {
         return NULL;
     }
 
     while (1) {
-        character =fgetc(stdin);
+        int character =fgetc(stdin);
         if (character == '\n') {
             break;
         }
