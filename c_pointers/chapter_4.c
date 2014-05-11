@@ -4,7 +4,7 @@
 
 void displayArray(int arr[], size_t size);
 void displayArrayPtr(int *arr, size_t size);
-int safeCompare(const unsigned char *a, const unsigned char *b, size_t asize, size_t bsize);
+int safeCompare(const void *a, const void *b, size_t asize, size_t bsize);
 int valid(void *p);
 
 
@@ -26,13 +26,14 @@ void displayArrayPtr(int *arr, size_t size) {
 }
 
 
-int safeCompare(const unsigned char *a, const unsigned char *b, size_t asize, size_t bsize) {
+int safeCompare(const void *a, const void *b, size_t asize, size_t bsize) {
     if (asize != bsize) {
         return -1;
     }
     int value = 0;
     for (size_t i = 0; i < asize; i++) {
-        value |= a[i] ^ b[i];
+        //value |= a[i] ^ b[i];
+        value |=  ((char*) a)[i] ^ ((char*) b)[i];
     }
     return value;
 }
@@ -104,19 +105,47 @@ int main(void) {
 
     // pointers and multidimensional arrays
     {
+        // declare a 2-dimensional array
         int matrix[2][5] = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}};
-        for (size_t i=0; i<2; i++) {
-
+        for (size_t i = 0; i < 2; i++) {
+            for (size_t j = 0; j < 5; j++) {
+                printf("matrix[%zu][%zu] Address: %p Value %d\n", i, j, &matrix[i][j], matrix[i][j]);
+            }
         }
+        // declare a pointer to a 2-dimensional array
+        int (*pmatrix)[5] = matrix;
+
+        // 1st row
+        printf("%p\n", matrix);
+        // 2nd row
+        printf("%p\n", matrix + 1);
+        // size of 1st row
+        printf("sizeof(matrix[0]): %zu\n", sizeof(matrix[0]));
+        // access 2nd element
+        printf("%p %d\n", matrix[0] + 1, *(matrix[0] + 1));
     }
 
-    unsigned char a[] = "wurst";
-    unsigned char b[] = "wurst";
-
-    if(safeCompare(a, b, sizeof(a), sizeof(b))) {
-        printf("%s ungleich %s\n", a, b);
-    } else {
-        printf("%s gleich %s\n", a, b);
+    // test safeCompare function
+    {
+        // test with char parameters
+        char a[] = "wurst";
+        char b[] = "wurst";
+    
+        if(safeCompare(a, b, sizeof(a), sizeof(b))) {
+            printf("%s ungleich %s\n", a, b);
+        } else {
+            printf("%s gleich %s\n", a, b);
+        }
+    
+        // test with int parameters
+        int bla[] = {0,1,2,3,4};
+        int bli[] = {0,1,2,3,4};
+    
+        if(safeCompare(bla, bli, sizeof(bla), sizeof(bli))) {
+            printf("%s ungleich %s\n", "bla", "bli");
+        } else {
+            printf("%s gleich %s\n", "bla", "bli");
+        }
     }
 
     return 0;
