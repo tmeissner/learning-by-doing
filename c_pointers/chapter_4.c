@@ -4,6 +4,8 @@
 
 void displayArray(int arr[], size_t size);
 void displayArrayPtr(int *arr, size_t size);
+int safeCompare(const unsigned char *a, const unsigned char *b, size_t asize, size_t bsize);
+int valid(void *p);
 
 
 void displayArray(int arr[], size_t size) {
@@ -24,12 +26,21 @@ void displayArrayPtr(int *arr, size_t size) {
 }
 
 
+int safeCompare(const unsigned char *a, const unsigned char *b, size_t asize, size_t bsize) {
+    if (asize != bsize) {
+        return -1;
+    }
+    int value = 0;
+    for (size_t i = 0; i < asize; i++) {
+        value |= a[i] ^ b[i];
+    }
+    return value;
+}
+
+
 int main(void) {
 
     int vector[5] = {1,2,3,4,5};
-    int *pv;
-
-    pv = vector;
 
     printf("length of vector: %zu\n", sizeof(vector)/sizeof(int));
 
@@ -41,28 +52,33 @@ int main(void) {
     }
 
     // pointer notation and arrays
-    int value = 3;
-    for (size_t index = 0; index < sizeof(vector)/sizeof(int); index++) {
-        // all following operations are equivalent
-        *pv++ *= value;
-        //pv[index] *= value;
-        //*(pv + index) *= value;
-        //vector[index] *= value;
-    }
-    for (size_t index = 0; index < sizeof(vector)/sizeof(int); index++) {
-        printf("vector[%zu]: %d\n", index, vector[index]);
+    {
+        int *pv = vector;
+        int value = 3;
+        for (size_t index = 0; index < sizeof(vector)/sizeof(int); index++) {
+            // all following operations are equivalent
+            *pv++ *= value;
+            //pv[index] *= value;
+            //*(pv + index) *= value;
+            //vector[index] *= value;
+        }
+        for (size_t index = 0; index < sizeof(vector)/sizeof(int); index++) {
+            printf("vector[%zu]: %d\n", index, vector[index]);
+        }
     }
 
     // using malloc to create a one-dimensional array
-    pv = (int*) malloc(5 * sizeof(int));
-    for (size_t i = 0; i < 5; i++) {
-        pv[i] = i + 1;
-    }
-    for (size_t i = 0; i < 5; ++i) {
-        *(pv + i) = i + 1;
-    }
-    for(size_t index = 0; index < 5; index++) {
-        printf("pv[%zu]: %d\n", index, pv[index]);
+    {
+        int *pv = malloc(5 * sizeof(*pv));
+        for (size_t i = 0; i < 5; i++) {
+            pv[i] = i + 1;
+        }
+        for (size_t i = 0; i < 5; ++i) {
+            *(pv + i) = i + 1;
+        }
+        for(size_t index = 0; index < 5; index++) {
+            printf("pv[%zu]: %d\n", index, pv[index]);
+        }
     }
 
     // passing array to function using array notation
@@ -77,12 +93,24 @@ int main(void) {
         int *arr[5];
         for (size_t i = 0; i < 5; i++) {
             // both variants are equivalent
-            arr[i] = (int*) malloc(sizeof(int));
+            arr[i] = malloc(sizeof(arr[i]));
             *arr[i] = i;
+            //arr[i][0] = i;
             //*(arr + i) = (int*) malloc(sizeof(int));
             //**(arr + i) = i;
+            printf("%d\n", **(arr + i));
         }
     }
+
+    unsigned char a[] = "wurst";
+    unsigned char b[] = "wurst";
+
+    if(safeCompare(a, b, sizeof(a), sizeof(b))) {
+        printf("%s ungleich %s\n", a, b);
+    } else {
+        printf("%s gleich %s\n", a, b);
+    }
+
 
     return 0;
 
