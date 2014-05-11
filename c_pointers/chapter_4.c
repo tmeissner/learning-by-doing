@@ -72,15 +72,23 @@ int main(void) {
     displayArrayPtr(vector, sizeof(vector)/sizeof(int));
 
 
-    // using one-dimensional array of pointers
+    // using a one-dimensional array of pointers
     {
         int *arr[5];
         for (size_t i = 0; i < 5; i++) {
             // both variants are equivalent
-            arr[i] = (int*) malloc(sizeof(int));
+            arr[i] = malloc(sizeof(int));
             *arr[i] = i;
             //*(arr + i) = (int*) malloc(sizeof(int));
             //**(arr + i) = i;
+        }
+    }
+
+    // pointers and multidimensional arrays
+    {
+        int matrix[2][5] = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}};
+        for (size_t i=0; i<2; i++) {
+
         }
     }
 
