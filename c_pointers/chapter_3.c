@@ -22,9 +22,9 @@ int sub(int a, int b);
 //int err(int a, int b);
 void err(void);
 int operation(t_fptr_op op, int a, int b);
-t_fptr_op select(char opc);
+t_fptr_op select(int opc);
 void initialiseOperationsArray(void);
-int evalArray(char opc, int a, int b);
+int evalArray(int opc, int a, int b);
 t_fptr_op operations[128] = {NULL};
 
 
@@ -87,7 +87,7 @@ int square(int num) {
 
 // function selector
 // returns pointer to selected function
-t_fptr_op select(char opc) {
+t_fptr_op select(int opc) {
     switch (opc) {
         case '+': return add;
         case '-': return sub;
@@ -104,7 +104,7 @@ void err(void) {  //int a, int b) {
 
 // evaluate given operation on a & b
 // operation is given by function pointer
-int eval(char opc, int a, int b) {
+int eval(int opc, int a, int b) {
     t_fptr_op operation = select(opc);
     return operation(a, b);
 }
@@ -120,7 +120,7 @@ void initialiseOperationsArray(void) {
 
 // eval function which works with
 // the array of function pointers
-int evalArray(char opc, int a, int b) {
+int evalArray(int opc, int a, int b) {
     t_fptr_op operation;
     operation = operations[opc];
     return operation(a, b);
