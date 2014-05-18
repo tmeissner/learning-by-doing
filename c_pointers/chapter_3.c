@@ -24,6 +24,7 @@ void err(void);
 int operation(t_fptr_op op, int a, int b);
 t_fptr_op select(int opc);
 void initialiseOperationsArray(void);
+int eval(int opc, int a, int b);
 int evalArray(int opc, int a, int b);
 t_fptr_op operations[128] = {NULL};
 
@@ -54,6 +55,7 @@ void allocateArrayWrong(int *arr, int size, int value) {
 
 // safer free version which checks for NULL pointer
 // assigns NULL after freeing the pointer
+// hint: check for null before free() isn't neccessary
 void saferFree(void **pointer) {
     if (pointer != NULL && *pointer != NULL) {
         free(*pointer);
