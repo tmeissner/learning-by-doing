@@ -52,20 +52,23 @@ int main(void) {
 
         // pointer to char (with memory allocation)
         char *headerPtr = malloc(strlen("Media Player") + 1);
-        strcpy(headerPtr, "Media Player");
-        printf("%s\n", headerPtr);
+        if (headerPtr != NULL) {
+            strcpy(headerPtr, "Media Player");
+            printf("%s\n", headerPtr);
 
-        *headerPtr       = 'W';
-        *(headerPtr + 1) = 'u';
-        *(headerPtr + 2) = 'r';
-        *(headerPtr + 3) = 's';
-        *(headerPtr + 4) = 't';
-        *(headerPtr + 5) = '\0';
-        printf("%s\n", headerPtr);
-        for (size_t j = 0; j < strlen(headerPtr); j++) {
-            printf("headerPtr[%zu] Address: %p  Value: %c\n", j, &headerPtr[j], headerPtr[j]);
+            *headerPtr       = 'W';
+            *(headerPtr + 1) = 'u';
+            *(headerPtr + 2) = 'r';
+            *(headerPtr + 3) = 's';
+            *(headerPtr + 4) = 't';
+            *(headerPtr + 5) = '\0';
+            printf("%s\n", headerPtr);
+            for (size_t j = 0; j < strlen(headerPtr); j++) {
+                printf("headerPtr[%zu] Address: %p  Value: %c\n", j, &headerPtr[j], headerPtr[j]);
+            }
+            printf("\n");
+            free(headerPtr);
         }
-        printf("\n");
 
         // direct init with character pointer
         // don't create a new copy, instead a reference to string literal pool only
@@ -78,10 +81,12 @@ int main(void) {
         // char *prefix = '+';
         // better:
         char *prefix = malloc(2);
-        *prefix = '+';
-        *(prefix + 1) = 0;
-        printf("%s\n", prefix);
-        free(prefix);
+        if (prefix != NULL) {
+            *prefix = '+';
+            *(prefix + 1) = 0;
+            printf("%s\n", prefix);
+            free(prefix);
+        }
 
         // string initialisation from standard in
         // don't forget to allocate memory before read from standard in
@@ -91,16 +96,20 @@ int main(void) {
         // scanf("%s", command);
         // better:
         char *command = malloc(11);
-        printf("%s: ", "Enter a command");
-        scanf("%10s", command);
-        printf("You entered: %s with length: %zu\n", command, strlen(command));
-        free(command);
+        if (command != NULL) {
+            printf("%s: ", "Enter a command");
+            scanf("%10s", command);
+            printf("You entered: %s with length: %zu\n", command, strlen(command));
+            free(command);
+        }
 
         // memset buffer overflow test
         // executes without warnings or errors on osx :D
         char *mem = malloc(11);
-        memset(mem, 0x42, 64);
-        free(mem);
+        if (mem != NULL) {
+            memset(mem, 0x42, 64);
+            free(mem);
+        }
 
     }
 
