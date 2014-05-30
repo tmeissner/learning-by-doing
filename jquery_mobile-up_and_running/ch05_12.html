@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My first jQuery Mobile code</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).bind('mobileinit', function () {
+            $.mobile.pageLoadErrorMessage = "Fehler, Seite nicht gefunden";
+        });
+    </script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div data-role="page" id="home">
+        <div data-role="header">
+            <h1>Form with various radio buttons</h1>
+        </div>
+        <form action="wurst.php" method="get">
+            <legend>Menu type</legend>
+            <div data-role="fieldcontain">
+                <label for="menuNative1">Native menu, single selection</label>
+                <input type="radio" id="menuNative1" name="menuType" value="1">
+                <label for="menuNative2">Native menu, multiple selection</label>
+                <input type="radio" id="menuNative2" name="menuType" value="2">
+                <label for="menuNative3">Non-native menu, single selection</label>
+                <input type="radio" id="menuNative3" name="menuType" value="3">
+                <label for="menuNative4">Non-native menu, multiple selection</label>
+                <input type="radio" id="menuNative4" name="menuType" value="4">
+            </div>
+            <legend>Menu type</legend>
+            <div data-role="controlgroup">
+                <label for="menuNative11">Native menu, single selection</label>
+                <input type="radio" id="menuNative11" name="menuType1" value="1">
+                <label for="menuNative21">Native menu, multiple selection</label>
+                <input type="radio" id="menuNative21" name="menuType1" value="2">
+                <label for="menuNative31">Non-native menu, single selection</label>
+                <input type="radio" id="menuNative31" name="menuType1" value="3">
+                <label for="menuNative41">Non-native menu, multiple selection</label>
+                <input type="radio" id="menuNative41" name="menuType1" value="4">
+            </div>
+            <legend>Delivery method</legend>
+            <div data-role="controlgroup" data-type="horizontal">
+                <label for="delsel0">UPS</label>
+                <input type="radio" id="delsel0" name="deltype" value="ups">
+                <label for="delsel1">DHL</label>
+                <input type="radio" id="delsel1" name="deltype" value="dhl">
+                <label for="delsel2">FedEx</label>
+                <input type="radio" id="delsel2" name="deltype" value=fedex>
+            </div>
+            <button type="submit" name="submit" value="submit-value">Submit</button>
+        </form>
+        <div data-role="footer">
+            <h1>www.goodcleanfun.de</h1>
+        </div>
+    </div>
+</body>
+</html>
