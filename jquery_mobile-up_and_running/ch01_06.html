@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>My first jQuery Mobile code</title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <div data-role="page" id="page1">
+            <div data-role="header">
+                <h1>First page</h1>
+            </div>
+            <div data-role="content">
+                <p>Examples of various transition effects when switching to a new page.</p>
+                <p>Go to the <a href="#page2" data-transition="slide">second page</a> with a slide.</p>
+                <p>Go to the <a href="#page2" data-transition="slideup">second page</a> with a slide up.</p>
+                <p>Go to the <a href="#page2" data-transition="slidedown">second page</a> with a slide down.</p>
+                <p>Go to the <a href="#page2" data-transition="pop">second page</a> with a pop.</p>
+                <p>Go to the <a href="#page2" data-transition="fade">second page</a> with a fade.</p>
+                <p>Go to the <a href="#page2" data-transition="flip">second page</a> with a flip.</p>
+            </div>
+            <div data-role="footer">
+                <h4>mobilexweb.com</h4>
+            </div>
+        </div>
+        <div data-role="page" id="page2" data-title="This is the second page" data-add-back-btn="true" data-back-btn-theme="b">
+            <div data-role="header">
+                <h1>Second page</h1>
+            </div>
+            <div data-role="content">
+                <p>This is the main content of the second page.</p>
+                <p>You can go back using the header's button, <a href="#page1">clicking here</a>
+                    or using your browser's back button.</p>
+            </div>
+            <div data-role="footer">
+                <h4>mobilexweb.com</h4>
+            </div>
+        </div>
+    </body>
+</html>
