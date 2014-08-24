@@ -113,6 +113,10 @@ int main(void) {
 
     }
 
+    #define KERNEL_PANIC 0x0000
+
+    char *mem = (int*) KERNEL_PANIC;
+
     // standard string operations
 
     // comparing strings
