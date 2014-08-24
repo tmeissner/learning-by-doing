@@ -97,7 +97,7 @@ int main(void) {
         // better:
         char *command = malloc(11);
         if (command != NULL) {
-            printf("%s: ", "Enter a command");
+            printf("%s: ", "Enter a command (max. 10 chars): ");
             scanf("%10s", command);
             printf("You entered: %s with length: %zu\n", command, strlen(command));
             free(command);
@@ -107,7 +107,10 @@ int main(void) {
         // executes without warnings or errors on osx :D
         char *mem = malloc(11);
         if (mem != NULL) {
-            memset(mem, 0x42, 64);
+            memset(mem, 0x42, 16);
+            for (size_t i = 0; i < 16; i++) {
+                printf("mem[%zu] Address: %p : %c\n", i, &mem[i], mem[i]);
+            }
             free(mem);
         }
 
