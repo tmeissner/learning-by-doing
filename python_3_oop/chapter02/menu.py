@@ -1,17 +1,22 @@
 import sys
+import pickle
 from notebook import Notebook, Note
+
 
 class Menu:
     '''Display a menu and respond to choices when run.'''
 
     def __init__(self):
+        self.picklefile = 'notebook.pickle'
         self.notebook = Notebook()
         self.choices = {
             "1": self.show_notes,
             "2": self.search_notes,
             "3": self.add_note,
             "4": self.modify_note,
-            "5": self.quit
+            "5": self.load_notes,
+            "6": self.save_notes,
+            "7": self.quit
         }
 
     def display_menu(self):
@@ -21,7 +26,9 @@ Notebook Menu
 2. Search Notes
 3. Add Note
 4. Modify Note
-5. Quit """)
+5. Load Notes
+6. Save Notes
+7. Quit """)
 
     def run(self):
         '''Display the menu and respond to choices.'''
@@ -61,9 +68,21 @@ Notebook Menu
             if not self.notebook.modify_tags(id, tags):
                 print("Note with id {0} doesn't exist.".format(id))
 
+    def load_notes(self):
+        with open(self.picklefile, 'rb') as f:
+            # The protocol version used is detected automatically, so we do not
+            # have to specify it.
+            self.notebook = pickle.load(f)
+
+    def save_notes(self):
+        with open(self.picklefile, 'wb') as f:
+            # Pickle the 'data' dictionary using the highest protocol available.
+            pickle.dump(self.notebook, f, pickle.HIGHEST_PROTOCOL)
+
     def quit(self):
         print("Thank you for using your notebook today.")
         sys.exit(0)
+
 
 if __name__ == "__main__":
     Menu().run()
