@@ -1,13 +1,24 @@
+# python modules
 import sys
 import pickle
+import base64
+import getpass
+# own modules
 from notebook import Notebook, Note
+# cryptography module
+from cryptography.fernet import Fernet, InvalidToken
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.backends import default_backend
+
 
 
 class Menu:
     '''Display a menu and respond to choices when run.'''
 
     def __init__(self):
-        self.picklefile = 'notebook.pickle'
+        self.salt = "a683c64de226677703f56e6b6ead94bbc3690ec5293c3de3ffdc"
+        self.savefile = 'notebook.safe'
         self.notebook = Notebook()
         self.choices = {
             "1": self.show_notes,
@@ -69,19 +80,48 @@ Notebook Menu
                 print("Note with id {0} doesn't exist.".format(id))
 
     def load_notes(self):
-        with open(self.picklefile, 'rb') as f:
-            # The protocol version used is detected automatically, so we do not
-            # have to specify it.
-            self.notebook = pickle.load(f)
+        try:
+            f = open(self.savefile, 'rb')
+        except IOError:
+            print("Could not open file")
+        else:
+            cipher = f.read()
+            f.close()
+            crypt = Fernet(self._get_password())
+            try:
+                plain = crypt.decrypt(cipher)
+            except InvalidToken:
+                print("Wrong password")
+            else:
+                self.notebook = pickle.loads(plain)
 
     def save_notes(self):
-        with open(self.picklefile, 'wb') as f:
-            # Pickle the 'data' dictionary using the highest protocol available.
-            pickle.dump(self.notebook, f, pickle.HIGHEST_PROTOCOL)
+        plain = pickle.dumps(self.notebook, pickle.HIGHEST_PROTOCOL)
+        crypt = Fernet(self._get_password())
+        cipher = crypt.encrypt(plain)
+        try:
+            f = open(self.savefile, 'wb')
+        except IOError:
+            print("Could not open file")
+        else:
+            f.write(cipher)
+            f.close()
+
+    def _get_password(self):
+        passphrase = getpass.getpass()
+        kdf = PBKDF2HMAC(
+            algorithm = hashes.SHA256(),
+            length = 32,
+            salt = self.salt.encode('utf-8'),
+            iterations = 1000,
+            backend = default_backend()
+        )
+        return base64.urlsafe_b64encode(kdf.derive(passphrase.encode('utf-8')))
 
     def quit(self):
         print("Thank you for using your notebook today.")
         sys.exit(0)
+
 
 
 if __name__ == "__main__":
