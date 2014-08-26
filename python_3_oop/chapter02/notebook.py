@@ -67,3 +67,11 @@ class Notebook:
                 return note
         return None
 
+    def _set_id(self):
+        id = 1
+        for note in self.notes:
+            if note.id > id:
+                id = note.id
+        global last_id
+        last_id = id
+
