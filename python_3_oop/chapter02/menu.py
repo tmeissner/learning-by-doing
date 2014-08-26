@@ -28,7 +28,8 @@ class Menu:
             "4": self.modify_note,
             "5": self.load_notes,
             "6": self.save_notes,
-            "7": self.quit
+            "7": self.__init__,
+            "8": self.quit
         }
 
     def display_menu(self):
@@ -40,7 +41,8 @@ Notebook Menu
 4. Modify Note
 5. Load Notes
 6. Save Notes
-7. Quit """)
+7. Reset Notes
+8. Quit """)
 
     def run(self):
         '''Display the menu and respond to choices.'''
@@ -94,8 +96,10 @@ Notebook Menu
         else:
             cipher = f.read()
             f.close()
-            self.notebook = self._decode_notefile(cipher)
-            self.notebook._set_id()
+            notebook = self._decode_notefile(cipher)
+            if notebook:
+                self.notebook = notebook
+                self.notebook._set_id()
 
     def save_notes(self):
         '''Encrypt notebook object and store it into notebook safe file'''
