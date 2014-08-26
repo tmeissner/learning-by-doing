@@ -8,9 +8,8 @@ class Note:
     string in searches and store tags for each note.'''
 
     def __init__(self, memo, tags=''):
-        '''initialize a note with memo and optional
-        space-separated tags. Automatically set the note's
-        creation date and a unique id.'''
+        '''initialize a note with memo and optional space-separated tags.
+        Automatically set the note's creation date and a unique id.'''
         self.memo = memo
         self.tags = tags
         self.creation_date = datetime.date.today()
@@ -19,16 +18,15 @@ class Note:
         self.id = last_id
 
     def match(self, filter):
-        '''Determine if this note matches the filter
-        text. Return True if it matches, False otherwise.
-        Search is case sensitive and matches both text and
-        tags.'''
+        '''Determine if this note matches the filter text.
+        Return True if it matches, False otherwise.
+        Search is case sensitive and matches both text and tags.'''
         return filter in self.memo or filter in self.tags
 
 
 class Notebook:
-    '''Represent a collection of notes that can be tagged,
-    modified, and searched.'''
+    '''Represent a collection of notes that can be tagged, modified and
+    searched.'''
 
     def __init__(self):
         '''Initialize a notebook with an empty list.'''
@@ -68,6 +66,7 @@ class Notebook:
         return None
 
     def _set_id(self):
+        '''set global last_id to highest id found in notebook'''
         id = 1
         for note in self.notes:
             if note.id > id:
