@@ -47,28 +47,32 @@ Notebook Menu
             self.display_menu()
             choice = input("Enter an option: ")
             action = self.choices.get(choice)
-            if action:
+            try:
                 action()
-            else:
+            except TypeError:
                 print("{0} is not a valid choice".format(choice))
 
     def show_notes(self, notes=None):
+        '''Display all notes stored in notebook object'''
         if not notes:
             notes = self.notebook.notes
         for note in notes:
             print("{0}: {1}\n{2}".format(note.id, note.tags, note.memo))
 
     def search_notes(self):
+        '''Search for a note containing given string'''
         filter = input("Search for: ")
         notes = self.notebook.search(filter)
         self.show_notes(notes)
 
     def add_note(self):
+        '''Add a given not to notebook object'''
         memo = input("Enter a memo: ")
         self.notebook.new_note(memo)
         print("Your note has been added.")
 
     def modify_note(self):
+        '''Modify tag and memo of note with given id'''
         id = input("Enter a note id: ")
         memo = input("Enter a memo: ")
         tags = input("Enter tags: ")
@@ -80,6 +84,7 @@ Notebook Menu
                 print("Note with id {0} doesn't exist.".format(id))
 
     def load_notes(self):
+        '''Decrypt notebook safe file and load it into notebook object'''
         try:
             f = open(self.savefile, 'rb')
         except IOError:
@@ -96,6 +101,7 @@ Notebook Menu
                 self.notebook = pickle.loads(plain)
 
     def save_notes(self):
+        '''Encrypt notebook object and store it into notebook safe file'''
         plain = pickle.dumps(self.notebook, pickle.HIGHEST_PROTOCOL)
         crypt = Fernet(self._get_password())
         cipher = crypt.encrypt(plain)
@@ -108,6 +114,7 @@ Notebook Menu
             f.close()
 
     def _get_password(self):
+        '''Request passphrase and derive key from it'''
         passphrase = getpass.getpass()
         kdf = PBKDF2HMAC(
             algorithm = hashes.SHA256(),
@@ -119,6 +126,7 @@ Notebook Menu
         return base64.urlsafe_b64encode(kdf.derive(passphrase.encode('utf-8')))
 
     def quit(self):
+        '''Quit application'''
         print("Thank you for using your notebook today.")
         sys.exit(0)
 
