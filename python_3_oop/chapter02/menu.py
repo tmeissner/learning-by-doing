@@ -3,6 +3,7 @@ import sys
 import pickle
 import base64
 import getpass
+import gzip
 # own modules
 from notebook import Notebook, Note
 # cryptography module
@@ -93,19 +94,12 @@ Notebook Menu
         else:
             cipher = f.read()
             f.close()
-            crypt = Fernet(self._get_password())
-            try:
-                plain = crypt.decrypt(cipher)
-            except InvalidToken:
-                print("Wrong password")
-            else:
-                self.notebook = pickle.loads(plain)
+            self.notebook = self._decode_notefile(cipher)
+            self.notebook._set_id()
 
     def save_notes(self):
         '''Encrypt notebook object and store it into notebook safe file'''
-        plain = pickle.dumps(self.notebook, pickle.HIGHEST_PROTOCOL)
-        crypt = Fernet(self._get_password())
-        cipher = crypt.encrypt(plain)
+        cipher = self._encode_notefile()
         try:
             f = open(self.savefile, 'wb')
         except IOError:
@@ -113,6 +107,26 @@ Notebook Menu
         else:
             f.write(cipher)
             f.close()
+
+    def _decode_notefile(self, cipher):
+        crypt = Fernet(self._get_password())
+        try:
+            plain = crypt.decrypt(cipher)
+        except InvalidToken:
+            print("Wrong password")
+        else:
+            try:
+                plain = gzip.decompress(plain)
+            except OSError:
+                print("File not valid")
+            else:
+                return pickle.loads(plain)
+
+    def _encode_notefile(self):
+        plain = pickle.dumps(self.notebook, pickle.HIGHEST_PROTOCOL)
+        crypt = Fernet(self._get_password())
+        plain = gzip.compress(plain)
+        return crypt.encrypt(plain)
 
     def _get_password(self):
         '''Request passphrase and derive key from it'''
