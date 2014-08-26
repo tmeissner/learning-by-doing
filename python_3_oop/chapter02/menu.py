@@ -79,6 +79,7 @@ Notebook Menu
         if memo:
             if not self.notebook.modify_memo(id, memo):
                 print("Note with id {0} doesn't exist.".format(id))
+                return
         if tags:
             if not self.notebook.modify_tags(id, tags):
                 print("Note with id {0} doesn't exist.".format(id))
@@ -120,7 +121,7 @@ Notebook Menu
             algorithm = hashes.SHA256(),
             length = 32,
             salt = self.salt.encode('utf-8'),
-            iterations = 1000,
+            iterations = 10000,
             backend = default_backend()
         )
         return base64.urlsafe_b64encode(kdf.derive(passphrase.encode('utf-8')))
