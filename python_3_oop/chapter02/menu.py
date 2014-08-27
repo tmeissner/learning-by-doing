@@ -26,10 +26,11 @@ class Menu:
             "2": self.search_notes,
             "3": self.add_note,
             "4": self.modify_note,
-            "5": self.load_notes,
-            "6": self.save_notes,
-            "7": self.__init__,
-            "8": self.quit
+            "5": self.remove_note,
+            "6": self.load_notes,
+            "7": self.save_notes,
+            "8": self.__init__,
+            "9": self.quit
         }
 
     def display_menu(self):
@@ -39,10 +40,11 @@ Notebook Menu
 2. Search Notes
 3. Add Note
 4. Modify Note
-5. Load Notes
-6. Save Notes
-7. Reset Notes
-8. Quit """)
+5. Remove Note
+6. Load Notes
+7. Save Notes
+8. Reset Notes
+9. Quit """)
 
     def run(self):
         '''Display the menu and respond to choices.'''
@@ -86,6 +88,14 @@ Notebook Menu
         if tags:
             if not self.notebook.modify_tags(id, tags):
                 print("Note with id {0} doesn't exist.".format(id))
+
+    def remove_note(self):
+        '''Remove note with given id from note list'''
+        id = input("Enter a note id: ")
+        if self.notebook._remove_note(id):
+            print("Note with id {0} removed.".format(id))
+        else:
+            print("Note with id {0} doesn't exist.".format(id))
 
     def load_notes(self):
         '''Decrypt notebook safe file and load it into notebook object'''
