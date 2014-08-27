@@ -65,6 +65,20 @@ class Notebook:
                 return note
         return None
 
+    def _remove_note(self, id):
+        '''Remove note(s) with given id from note list'''
+        if self._find_note(id):
+            removed = []
+            index = 0
+            for note in self.notes:
+                if str(note.id) == str(id):
+                    removed.append(self.notes.pop(index))
+                else:
+                    index += 1
+            self._set_id()
+            return removed
+        return False
+
     def _set_id(self):
         '''set global last_id to highest id found in notebook'''
         id = 1
