@@ -92,7 +92,7 @@ Notebook Menu
     def remove_note(self):
         '''Remove note with given id from note list'''
         id = input("Enter a note id: ")
-        if self.notebook._remove_note(id):
+        if self.notebook.remove_note(id):
             print("Note with id {0} removed.".format(id))
         else:
             print("Note with id {0} doesn't exist.".format(id))
