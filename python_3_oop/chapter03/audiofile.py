@@ -1,4 +1,5 @@
 # small example for inhiterance with polymorphism
+# and duck typing as mostly better alternative
 
 class AudioFile:
 
@@ -30,3 +31,14 @@ class OggFile(AudioFile):
 
     def play(self):
         print("Playing {} as ogg".format(self.filename))
+
+
+class FlacFile:
+
+    def __init__(self, filename):
+        if not filename.endswith(".flac"):
+            raise Exception("Invalid file format")
+        self.filename = filename
+
+    def play(self):
+        print("Playing {} as flac".format(self.filename))
