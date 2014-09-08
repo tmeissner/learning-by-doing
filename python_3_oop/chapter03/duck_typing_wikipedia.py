@@ -21,6 +21,7 @@ class Duck(Bird):
 
 class Frog:
     "Frogs also can quak"
+
     def quak(self):
         print(str(self)+': quak')
 
