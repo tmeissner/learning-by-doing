@@ -3,5 +3,6 @@
 *.*#*
 .idea
 *.pyc
+*.zip
 __pycache__
 notebook.safe
