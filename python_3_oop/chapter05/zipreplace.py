@@ -1,9 +1,9 @@
-from zipprocessor import ZipProcessor
+from zipprocessor import ZipProcessorInh
 import sys
 import os
 
 
-class ZipReplace(ZipProcessor):
+class ZipReplace(ZipProcessorInh):
 
     def __init__(self, filename, search_string, replace_string):
         super().__init__(filename)

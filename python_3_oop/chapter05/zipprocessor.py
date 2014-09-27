@@ -3,7 +3,7 @@ import shutil
 import zipfile
 
 
-class ZipProcessor:
+class ZipProcessorInh:
 
     def __init__(self, zipname):
         self.zipname = zipname
