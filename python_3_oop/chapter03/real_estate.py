@@ -31,7 +31,7 @@ class Apartment(Property):
     valid_laundries = ("coin", "ensuite", "none")
     valid_balconies = ("yes", "no", "solarium")
 
-    def __init__(self, balcony = "", laundry = "", **kwargs):
+    def __init__(self, balcony="", laundry="", **kwargs):
         super().__init__(**kwargs)
         self.balcony = balcony
         self.laundry = laundry
@@ -51,8 +51,8 @@ class Apartment(Property):
         balcony = get_valid_input("Does the property have a balcony?",
             Apartment.valid_balconies)
         parent_init.update({
-            "laundry" : laundry,
-            "balcony" : balcony
+            "laundry": laundry,
+            "balcony": balcony
         })
         return parent_init
 
@@ -63,7 +63,7 @@ class House(Property):
     valid_garage = ("attached", "detached", "none")
     valid_fenced = ("yes", "no")
 
-    def __init__(self, num_stories = "", garage = "", fenced = "", **kwargs):
+    def __init__(self, num_stories="", garage="", fenced="", **kwargs):
         super().__init__(**kwargs)
         self.garage = garage
         self.fenced = fenced
@@ -72,9 +72,9 @@ class House(Property):
     def display(self):
         super().display()
         print("HOUSE DETAILS")
-        print ("# of stories: {}".format(self.num_stories))
-        print ("garage: {}".format(self.garage))
-        print ("fenced yard: {}".format(self.fenced))
+        print("# of stories: {}".format(self.num_stories))
+        print("garage: {}".format(self.garage))
+        print("fenced yard: {}".format(self.fenced))
         print()
 
     @staticmethod
@@ -84,16 +84,16 @@ class House(Property):
         garage = get_valid_input("Is there a garage?", House.valid_garage)
         num_stories = input("How many stories? ")
         parent_init.update({
-            "fenced" : fenced,
-            "garage" : garage,
-            "num_stories" : num_stories
+            "fenced": fenced,
+            "garage": garage,
+            "num_stories": num_stories
         })
         return parent_init
 
 
 class Purchase:
 
-    def __init__(self, price = "", taxes = "", **kwargs):
+    def __init__(self, price="", taxes="", **kwargs):
         super().__init__(**kwargs)
         self.price = price
         self.taxes = taxes
@@ -108,14 +108,14 @@ class Purchase:
     @staticmethod
     def prompt_init():
         return dict(
-            price = input("What's the selling price? "),
-            taxes = input("What are the estimated taxes? ")
+            price=input("What's the selling price? "),
+            taxes=input("What are the estimated taxes? ")
         )
 
 
 class Rental:
 
-    def __init__(self, furnished = "", utilities = "", rent = "",  **kwargs):
+    def __init__(self, furnished="", utilities="", rent="",  **kwargs):
         super().__init__(**kwargs)
         self.furnished = furnished
         self.utilities = utilities
@@ -133,8 +133,8 @@ class Rental:
     def prompt_init():
         return dict(
             rent = input("What is the monthly rent? "),
-            utilities = input("What are the estimated utilities? "),
-            furnished = get_valid_input("Is the property furnished?",
+            utilities=input("What are the estimated utilities? "),
+            furnished=get_valid_input("Is the property furnished?",
                 ("yes", "no"))
         )
 
@@ -178,10 +178,10 @@ class ApartmentPurchase(Purchase, Apartment):
 class Agent:
 
     type_map = {
-        ("house", "rental") : HouseRental,
-        ("house", "purchase") : HousePurchase,
-        ("apartment", "rental") : ApartmentRental,
-        ("apartment", "purchase") : ApartmentPurchase
+        ("house", "rental"): HouseRental,
+        ("house", "purchase"): HousePurchase,
+        ("apartment", "rental"): ApartmentRental,
+        ("apartment", "purchase"): ApartmentPurchase
     }
 
     def __init__(self):
@@ -196,9 +196,9 @@ class Agent:
             ("house", "apartment")).lower()
         payment_type = get_valid_input("What payment type?",
             ("purchase", "rental")).lower()
-        PropertyClass = self.type_map[(property_type, payment_type)]
-        init_args = PropertyClass.prompt_init()
-        self.property_list.append(PropertyClass(**init_args))
+        property_class = self.type_map[(property_type, payment_type)]
+        init_args = property_class.prompt_init()
+        self.property_list.append(property_class(**init_args))
 
 
 def get_valid_input(input_string, valid_options):

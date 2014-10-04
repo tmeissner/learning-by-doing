@@ -5,7 +5,7 @@ import base64
 import getpass
 import gzip
 # own modules
-from notebook import Notebook, Note
+from notebook import Notebook
 # cryptography module
 from cryptography.fernet import Fernet, InvalidToken
 from cryptography.hazmat.primitives import hashes
@@ -13,9 +13,8 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 
 
-
 class Menu:
-    '''Display a menu and respond to choices when run.'''
+    """Display a menu and respond to choices when run."""
 
     def __init__(self):
         self.salt = "a683c64de226677703f56e6b6ead94bbc3690ec5293c3de3ffdc"
@@ -47,7 +46,7 @@ Notebook Menu
 9. Quit """)
 
     def run(self):
-        '''Display the menu and respond to choices.'''
+        """Display the menu and respond to choices."""
         while True:
             self.display_menu()
             choice = input("Enter an option: ")
@@ -58,26 +57,26 @@ Notebook Menu
                 print("{0} is not a valid choice".format(choice))
 
     def show_notes(self, notes=None):
-        '''Display all notes stored in notebook object'''
+        """Display all notes stored in notebook object"""
         if not notes:
             notes = self.notebook.notes
         for note in notes:
             print("{0}: {1}\n{2}".format(note.id, note.tags, note.memo))
 
     def search_notes(self):
-        '''Search for a note containing given string'''
+        """Search for a note containing given string"""
         filter = input("Search for: ")
         notes = self.notebook.search(filter)
         self.show_notes(notes)
 
     def add_note(self):
-        '''Add a given not to notebook object'''
+        """Add a given not to notebook object"""
         memo = input("Enter a memo: ")
         self.notebook.new_note(memo)
         print("Your note has been added.")
 
     def modify_note(self):
-        '''Modify tag and memo of note with given id'''
+        """Modify tag and memo of note with given id"""
         id = input("Enter a note id: ")
         memo = input("Enter a memo: ")
         tags = input("Enter tags: ")
@@ -90,7 +89,7 @@ Notebook Menu
                 print("Note with id {0} doesn't exist.".format(id))
 
     def remove_note(self):
-        '''Remove note with given id from note list'''
+        """Remove note with given id from note list"""
         id = input("Enter a note id: ")
         if self.notebook.remove_note(id):
             print("Note with id {0} removed.".format(id))
@@ -98,7 +97,7 @@ Notebook Menu
             print("Note with id {0} doesn't exist.".format(id))
 
     def load_notes(self):
-        '''Decrypt notebook safe file and load it into notebook object'''
+        """Decrypt notebook safe file and load it into notebook object"""
         try:
             f = open(self.savefile, 'rb')
         except IOError:
@@ -112,7 +111,7 @@ Notebook Menu
                 self.notebook._set_id()
 
     def save_notes(self):
-        '''Encrypt notebook object and store it into notebook safe file'''
+        """Encrypt notebook object and store it into notebook safe file"""
         cipher = self._encode_notefile()
         try:
             f = open(self.savefile, 'wb')
@@ -143,22 +142,21 @@ Notebook Menu
         return crypt.encrypt(plain)
 
     def _get_password(self):
-        '''Request passphrase and derive key from it'''
+        """Request passphrase and derive key from it"""
         passphrase = getpass.getpass()
         kdf = PBKDF2HMAC(
-            algorithm = hashes.SHA256(),
-            length = 32,
-            salt = self.salt.encode('utf-8'),
-            iterations = 10000,
-            backend = default_backend()
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=self.salt.encode('utf-8'),
+            iterations=10000,
+            backend=default_backend()
         )
         return base64.urlsafe_b64encode(kdf.derive(passphrase.encode('utf-8')))
 
     def quit(self):
-        '''Quit application'''
+        """Quit application"""
         print("Thank you for using your notebook today.")
         sys.exit(0)
-
 
 
 if __name__ == "__main__":

@@ -11,8 +11,7 @@ class ZipReplace(ZipProcessorInh):
         self.replace_string = replace_string
 
     def process_files(self):
-        '''perform a search and replace on all files in the temporrary
-        directory'''
+        """perform a search and replace on all files in the temporary directory"""
         for filename in os.listdir(self.temp_directory):
             with open(self._full_filename(filename)) as file:
                 contents = file.read()
