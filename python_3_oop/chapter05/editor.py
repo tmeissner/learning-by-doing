@@ -1,9 +1,12 @@
 class Document:
 
-    def __init__(self):
+    def __init__(self, filename):
         self.characters = []
         self.cursor = Cursor(self)
-        self.filename = ""
+        if len(filename) == 0:
+            raise FileNameInvalid("Invalid filename")
+        else:
+            self.filename = filename
 
     def insert(self, character):
         if not hasattr(character, 'character'):
@@ -12,12 +15,18 @@ class Document:
         self.cursor.forward()
 
     def delete(self):
-        del self.characters[self.cursor.position]
+        try:
+            del self.characters[self.cursor.position]
+        except IndexError:
+            print("No character to delete")
 
     def save(self):
-        f = open(self.filename, "w")
-        f.write("".join(self.characters))
-        f.close()
+        try:
+            f = open(self.filename, "w")
+            f.write(self.string)
+            f.close()
+        except IOError:
+            print("Could not safe file")
 
     @property
     def string(self):
@@ -31,14 +40,16 @@ class Cursor:
         self.position = 0
 
     def forward(self):
-        self.position += 1
+        if self.position < len(self.document.characters):
+            self.position += 1
 
     def back(self):
-        self.position -= 1
+        if self.position > 0:
+            self.position -= 1
 
     def home(self):
         while self.document.characters[self.position - 1].character != "\n":
-            self.position -= 1
+            self.back()
             if self.position == 0:
                 # got to beginning of file before newline
                 break
@@ -46,12 +57,14 @@ class Cursor:
     def end(self):
         while (self.position < len(self.document.characters) and
                self.document.characters[self.position].character != "\n"):
-            self.position += 1
+            self.forward()
+
 
 class Character:
 
     def __init__(self, character, bold=False, italic=False, underline=False):
-        assert len(character) == 1
+        if len(character) != 1:
+            raise CharacterLength("Please insert a single character")
         self.character = character
         self.bold = bold
         self.italic = italic
@@ -63,3 +76,10 @@ class Character:
         underline = "_" if self.underline else ''
         return bold + italic + underline + self.character
 
+
+class FileNameInvalid(Exception):
+    pass
+
+
+class CharacterLength(Exception):
+    pass
