@@ -4,21 +4,21 @@ import hashlib
 class User:
 
     def __init__(self, username, password):
-        '''Create a new user object. The password will be encrypted before
-        storing'''
+        """Create a new user object. The password will be encrypted before
+        storing"""
         self.username = username
         self.password = self._encrypt_pw(password)
         self.is_logged_in = False
 
     def _encrypt_pw(self, password):
-        '''Encrypt the password with the username and return the sha digest.'''
+        """Encrypt the password with the username and return the sha digest."""
         hash_string = self.username + password
         hash_string = hash_string.encode("utf8")
         return hashlib.sha256(hash_string).hexdigest()
 
     def check_password(self, password):
-        '''Return True if the password is valid for this user,
-        False otherwise'''
+        """Return True if the password is valid for this user,
+        False otherwise"""
         encrypted = self._encrypt_pw(password)
         return encrypted == self.password
 
@@ -26,13 +26,13 @@ class User:
 class Authenticator:
 
     def __init__(self):
-        '''Construct an authenticator to manage users logging in and out.
-        The User objects are stored in a simple dictionary'''
+        """Construct an authenticator to manage users logging in and out.
+        The User objects are stored in a simple dictionary"""
         self.users = {}
 
     def add_user(self, username, password):
-        '''Add a User object with given username & password to the users
-        dictionary after checking if given username & password are valid'''
+        """Add a User object with given username & password to the users
+        dictionary after checking if given username & password are valid"""
         if username in self.users:
             raise UsernameAlreadyExists(username)
         if len(password) < 6:
@@ -65,7 +65,7 @@ class Authorizor():
         self.permissions = {}
 
     def add_permission(self, perm_name):
-        '''Create a new permission that users can be added to'''
+        """Create a new permission that users can be added to"""
         try:
             perm_set = self.permissions[perm_name]
         except KeyError:
@@ -74,7 +74,7 @@ class Authorizor():
             raise PermissionError("Permission exists")
 
     def permit_user(self, perm_name, username):
-        '''Grant the given permission to the given user'''
+        """Grant the given permission to the given user"""
         try:
             perm_set = self.permissions[perm_name]
         except KeyError:
@@ -104,7 +104,7 @@ authorizor = Authorizor(authenticator)
 
 class AuthException(Exception):
 
-    def __init__(self, username, user = None):
+    def __init__(self, username, user=None):
         super().__init__(username, user)
         self.username = username
         self.user = user
