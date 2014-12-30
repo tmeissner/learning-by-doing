@@ -47,9 +47,9 @@ class Apartment(Property):
     def prompt_init():
         parent_init = Property.prompt_init()
         laundry = get_valid_input("What laundry facilities does the property "
-            "have?", Apartment.valid_laundries)
+                                  "have?", Apartment.valid_laundries)
         balcony = get_valid_input("Does the property have a balcony?",
-            Apartment.valid_balconies)
+                                  Apartment.valid_balconies)
         parent_init.update({
             "laundry": laundry,
             "balcony": balcony
@@ -132,10 +132,10 @@ class Rental:
     @staticmethod
     def prompt_init():
         return dict(
-            rent = input("What is the monthly rent? "),
+            rent=input("What is the monthly rent? "),
             utilities=input("What are the estimated utilities? "),
             furnished=get_valid_input("Is the property furnished?",
-                ("yes", "no"))
+                                      ("yes", "no"))
         )
 
 
@@ -193,9 +193,9 @@ class Agent:
 
     def add_property(self):
         property_type = get_valid_input("What type of property?",
-            ("house", "apartment")).lower()
+                                        ("house", "apartment")).lower()
         payment_type = get_valid_input("What payment type?",
-            ("purchase", "rental")).lower()
+                                       ("purchase", "rental")).lower()
         property_class = self.type_map[(property_type, payment_type)]
         init_args = property_class.prompt_init()
         self.property_list.append(property_class(**init_args))

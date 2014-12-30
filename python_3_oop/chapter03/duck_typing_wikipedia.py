@@ -3,7 +3,7 @@
 
 
 class Bird:
-    "Birds have a name that they return in string represention"
+    """Birds have a name that they return in string represention"""
 
     def __init__(self, name):
         self.name = name
@@ -13,14 +13,14 @@ class Bird:
 
 
 class Duck(Bird):
-    "Ducks are birds which can quak"
+    """Ducks are birds which can quak"""
 
     def quak(self):
         print(str(self)+': quak')
 
 
 class Frog:
-    "Frogs also can quak"
+    """Frogs also can quak"""
 
     def quak(self):
         print(str(self)+': quak')
