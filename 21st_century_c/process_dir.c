@@ -1,7 +1,10 @@
-#include "process_dir.h"
-#include <dirent.h>
+#define _GNU_SOURCE
 #include <stdio.h>
+
+#include <dirent.h>
 #include <stdlib.h>
+
+#include "process_dir.h"
 
 
 int process_dir_r(filestruct level) {
@@ -48,6 +51,6 @@ int process_dir_r(filestruct level) {
       free(next_level.fullname);
     }
   }
-  closedir(current);
+  (void) closedir(current);
   return errct;
 }
