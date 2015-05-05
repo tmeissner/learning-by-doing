@@ -31,8 +31,8 @@ int process_dir_r(filestruct level) {
 
     filestruct next_level = level;
     next_level.name = entry->d_name;
-    (void) asprintf(&next_level.fullname, "%s/%s", level.fullname, entry->d_name);
-    if (next_level.fullname == NULL) {
+    if ((asprintf(&next_level.fullname, "%s/%s", level.fullname, entry->d_name) == -1) ||
+        (next_level.fullname == NULL)) {
       return 1;
     }
 
