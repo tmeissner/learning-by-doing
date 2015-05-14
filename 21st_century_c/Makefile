@@ -13,6 +13,10 @@ simple_cplx : cplx.h complex.c simple_cplx.c
 .PHONY : all
 all : boxes show_tree simple_cplx
 
+.PHONY : check
+check : *.h *.c
+	cppcheck --enable=warning --enable=style *.c
+
 .PHONY : clean
 clean :
 	rm -f boxes
