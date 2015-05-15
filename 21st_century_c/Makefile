@@ -22,3 +22,4 @@ clean :
 	rm -f boxes
 	rm -f show_tree
 	rm -f simple_cplx
+	rm -rf *.dSYM
