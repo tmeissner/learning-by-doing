@@ -1,4 +1,4 @@
-CFLAGS = --std=c11 -Wall -O3
+CFLAGS = -Wall -O3 --std=c11
 
 
 boxes : boxes.c
@@ -9,6 +9,9 @@ show_tree : process_dir.h process_dir.c show_tree.c
 
 simple_cplx : cplx.h complex.c simple_cplx.c
 	$(CC) `pkg-config --cflags --libs gsl` $(CFLAGS) complex.c $@.c -o $@
+
+seamlessone : seamlessone.c
+	$(CC) $(CFLAGS) -fms-extensions -Wno-microsoft $@.c -o $@
 
 .PHONY : all
 all : boxes show_tree simple_cplx
@@ -22,4 +25,5 @@ clean :
 	rm -f boxes
 	rm -f show_tree
 	rm -f simple_cplx
+	rm -f seamlessone
 	rm -rf *.dSYM
