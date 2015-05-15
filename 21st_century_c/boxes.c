@@ -31,15 +31,17 @@ int main() {
 
 void this_row(direction_s d) {
 
-  char s[] = ".*.\n";
+  char *c;
 
   if(d.left) {
-    strlcpy(s, "*..\n", sizeof(s));
+    c = "*..";
   } else if(d.right) {
-    strlcpy(s, "..*\n", sizeof(s));
+    c = "..*";
+  } else {
+    c = ".*.";
   }
 
-  printf("%s", s);
+  printf("%s\n", c);
 
 }
 
