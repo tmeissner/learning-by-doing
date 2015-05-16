@@ -8,7 +8,10 @@ typedef struct point {
 } point;
 
 
-
+/*
+Nested the anonymous struct in anonymous union together with a named struct
+to support direct access to 2D point in the 3D point structure.
+*/
 typedef struct {
   union {
     struct point;
