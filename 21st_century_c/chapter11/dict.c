@@ -28,8 +28,10 @@ dictionary *dictionary_new(void) {
 static void dictionary_add_keyval(dictionary *in, keyval *kv) {
 
   in->length++;
-  in->pairs = realloc(in->pairs, sizeof(keyval*) * in->length);
-  if(in->pairs != NULL) {
+  keyval **tmp = realloc(in->pairs, sizeof(keyval*) * in->length);
+  if(tmp != NULL) {
+    in->pairs = tmp;
+    tmp = NULL;
     in->pairs[in->length-1] = kv;
   } else {
     fprintf(stderr, "Out of memory.\n");
