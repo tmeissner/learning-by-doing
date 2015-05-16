@@ -78,6 +78,7 @@ void dictionary_free(dictionary *in) {
   for (size_t i = 0; i < in->length; i++) {
     keyval_free(in->pairs[i]);
   }
+  free(in->pairs);
   free(in);
 
 }
