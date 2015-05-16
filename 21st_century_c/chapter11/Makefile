@@ -1,4 +1,4 @@
-CFLAGS = -Wall -O3 --std=c11
+CFLAGS = -Wall -O0 --std=c11 -g
 
 
 simple_cplx : cplx.h complex.c simple_cplx.c
@@ -9,6 +9,9 @@ seamlessone : seamlessone.c
 
 seamlesstwo : seamlesstwo.c
 	$(CC) $(CFLAGS) -fms-extensions -Wno-microsoft $@.c -o $@
+
+dict_use : keyval.h keyval.c dict.h dict.c dict_use.c
+	$(CC) $(CFLAGS) keyval.c dict.c $@.c -o $@
 
 
 .PHONY : all
@@ -23,4 +26,5 @@ clean :
 	rm -f simple_cplx
 	rm -f seamlessone
 	rm -f seamlesstwo
+	rm -f dict_use
 	rm -rf *.dSYM
