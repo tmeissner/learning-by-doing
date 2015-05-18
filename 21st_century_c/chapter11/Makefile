@@ -1,4 +1,4 @@
-CFLAGS = -Wall -O0 --std=c11 -g
+CFLAGS = -Wall -O0 --std=c11 -g -lm
 
 
 simple_cplx : cplx.h complex.c simple_cplx.c
@@ -15,7 +15,7 @@ dict_use : keyval.h keyval.c dict.h dict.c dict_use.c
 
 
 .PHONY : all
-all : simple_cplx seamlessone seamlesstwo
+all : simple_cplx seamlessone seamlesstwo dict_use
 
 .PHONY : check
 check : *.h *.c
