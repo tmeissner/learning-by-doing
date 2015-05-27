@@ -5,7 +5,7 @@
 
 int main() {
 
-  int complex a = 1 + 2I;
+  complex int a = 1 + 2I;
   complex double b = 2 + I;
   gsl_complex c = gsl_cplx_from_c99(a);
 

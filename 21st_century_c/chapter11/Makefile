@@ -1,4 +1,7 @@
-CFLAGS = -Wall -O0 --std=c11 -g -lm
+CFLAGS = -Wall -Wextra --std=c11 -g -lm -ftest-coverage -fprofile-arcs
+
+.PHONY : all
+all : simple_cplx seamlessone seamlesstwo dict_use
 
 
 simple_cplx : cplx.h complex.c simple_cplx.c
@@ -10,12 +13,9 @@ seamlessone : seamlessone.c
 seamlesstwo : seamlesstwo.c
 	$(CC) $(CFLAGS) -fms-extensions -Wno-microsoft $@.c -o $@
 
-dict_use : keyval.h keyval.c dict.h dict.c dict_use.c
-	$(CC) $(CFLAGS) keyval.c dict.c $@.c -o $@
+dict_use : memory.h memory.c keyval.h keyval.c dict.h dict.c dict_use.c
+	$(CC) $(CFLAGS) memory.c keyval.c dict.c $@.c -o $@
 
-
-.PHONY : all
-all : simple_cplx seamlessone seamlesstwo dict_use
 
 .PHONY : check
 check : *.h *.c
@@ -28,3 +28,6 @@ clean :
 	rm -f seamlesstwo
 	rm -f dict_use
 	rm -rf *.dSYM
+	rm -rf *.gcno
+	rm -rf *.gcda
+	rm -rf *.gcov

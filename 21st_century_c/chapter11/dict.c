@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "memory.h"
 #include "dict.h"
 
 
@@ -14,12 +16,11 @@ dictionary *dictionary_new(void) {
     dictionary_not_found = &dnf;
   }
   dictionary *out = malloc(sizeof(dictionary));
-  if(out != NULL) {
-    *out = (dictionary) {};
-  } else {
+  if(out == NULL) {
     fprintf(stderr, "Out of memory.\n");
     abort();
   }
+  *out = (dictionary) {};
   return out;
 
 }
@@ -29,14 +30,13 @@ static void dictionary_add_keyval(dictionary *in, keyval *kv) {
 
   in->length++;
   keyval **tmp = realloc(in->pairs, sizeof(keyval*) * in->length);
-  if(tmp != NULL) {
-    in->pairs = tmp;
-    tmp = NULL;
-    in->pairs[in->length-1] = kv;
-  } else {
+  if(tmp == NULL) {
     fprintf(stderr, "Out of memory.\n");
     abort();
   }
+  in->pairs = tmp;
+  tmp = NULL;
+  in->pairs[in->length-1] = kv;
 
 }
 
@@ -47,7 +47,11 @@ void dictionary_add(dictionary *in, char *key, void *value) {
     fprintf(stderr, "NULL is not a valid key.\n");
     abort();
   }
-  dictionary_add_keyval(in, keyval_new(key, value));
+  if(dictionary_find(in, key) == dictionary_not_found) {
+    dictionary_add_keyval(in, keyval_new(key, value));
+  } else {
+    printf("Key '%s' already exists!\n", key);
+  }
 
 }
 
@@ -80,8 +84,8 @@ void dictionary_free(dictionary *in) {
   for (size_t i = 0; i < in->length; i++) {
     keyval_free(in->pairs[i]);
   }
-  free(in->pairs);
-  free(in);
+  safeFree(in->pairs);
+  safeFree(in);
 
 }
 
