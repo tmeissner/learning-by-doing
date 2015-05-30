@@ -48,7 +48,8 @@ SRC_FILES=\
 	../test/LedDriverTest.c \
 	../test/LedDriverTestRunner.c \
 	../test/AllTests.c \
-	../src/LedDriver.c
+	../src/LedDriver.c \
+	../mocks/RuntimeErrorStub.c
 
 INC_DIRS=-I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=
