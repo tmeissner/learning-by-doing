@@ -6,18 +6,18 @@
 
 #We try to detect the OS we are running on, and adjust commands as needed
 ifeq ($(OS),Windows_NT)
-	CLEANUP = del /F /Q
-	MKDIR = mkdir
-	TARGET_EXTENSION=.exe
+	CLEANUP          := del /F /Q
+	MKDIR            := mkdir
+	TARGET_EXTENSION := .exe
 else
-	CLEANUP = rm -rf
-	MKDIR = mkdir -p
-	TARGET_EXTENSION=
+	CLEANUP          := rm -rf
+	MKDIR            := mkdir -p
+	TARGET_EXTENSION :=
 endif
 
 
-UNITY_ROOT=../../../../../Git/Unity
-C_COMPILER=gcc
+UNITY_ROOT := ../../../../Unity
+C_COMPILER := gcc
 
 CFLAGS = -std=c11
 CFLAGS += -Wall
@@ -40,33 +40,40 @@ CFLAGS += -g
 CFLAGS += -ftest-coverage
 CFLAGS += -fprofile-arcs
 
-TARGET_BASE=test_sprintf
-TARGET = $(TARGET_BASE)$(TARGET_EXTENSION)
-SRC_FILES=\
+TARGET_BASE := test_sprintf
+TARGET       = $(TARGET_BASE)$(TARGET_EXTENSION)
+
+SRC_FILES = \
 	$(UNITY_ROOT)/extras/fixture/src/unity_fixture.c \
 	$(UNITY_ROOT)/src/unity.c \
 	../test/SprintfTest.c \
 	../test/SprintfTestRunner.c \
 	../test/AllTests.c
-INC_DIRS=-I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
-SYMBOLS=
+
+INC_DIRS = -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
+SYMBOLS  =
 
 
-all: clean tests
+all: clean tests cover
 
+
+build/$(TARGET):	test/*.c
+	@$(MKDIR) build
+	@$(MKDIR) build/cover
+	@echo "Compiling"; cd build; $(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES) -o $(TARGET)
 
 .PHONY: tests
 tests: build/$(TARGET)
-
-build/$(TARGET):	test/*.c
-	@echo "Compiling"; cd build; $(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES) -o $(TARGET)
 	@echo "Running tests"; ./build/$(TARGET)
+
+.PHONY: cover
+cover: tests
 	@echo "Preparing coverage"; cp build/*.gc* test/
-	@echo "Running coverage"; cd test; gcovr -r . -b -p --html --html-details -o ../build/cover/$(TARGET).html
+	@echo "Running coverage"; cd test; gcovr -r . -b -p --html --html-details -o ../build/cover/test.html
 	@echo "Clearing intermediate files"; rm test/*.gc* build/*.gc*
 
 
 .PHONY: clean
 clean:
-	@echo "Cleaning $<"; $(CLEANUP) build/$(TARGET) build/cover/*
+	@echo "Cleaning $<"; $(CLEANUP) build
 
