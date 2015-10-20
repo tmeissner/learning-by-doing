@@ -8,9 +8,9 @@ int main (void) {
 
   printf("Enter a floating-point value: ");
   scanf("%f", &a);
-  printf("fixed-point notation: %f\n", a);
-  printf("exponential notation: %e\n", a);
-  printf("p notation: %a\n", a);
+  printf("fixed-point notation: %.2f\n", a);
+  printf("exponential notation: %.2e\n", a);
+  printf("p notation: %.2a\n", a);
 
   return 0;
 
