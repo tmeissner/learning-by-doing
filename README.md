@@ -6,6 +6,9 @@
 ##### Understanding and Using C Pointers
 [http://shop.oreilly.com/product/0636920028000.do](http://shop.oreilly.com/product/0636920028000.do)
 
+##### C Primer Plus (6th edition)
+[http://www.informit.com/store/c-primer-plus-9780321928429](http://www.informit.com/store/c-primer-plus-9780321928429)
+
 ##### jQuery Mobile - Up and Running
 [http://shop.oreilly.com/product/0636920014607.do](http://shop.oreilly.com/product/0636920014607.do)
 
