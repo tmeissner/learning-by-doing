@@ -4,13 +4,13 @@
 
 int main(void) {
 
-  unsigned char letter = 'A';
+  char letter = 'A';
 
-  for (unsigned char i = 0; i < 6; i++) {
-    for (unsigned char j = letter; j <= (letter + i); j++) {
+  for (char i = 1; i <= 6; i++) {
+    for (char j = letter; j < (letter + i); j++) {
       printf("%c", j);
     }
-    letter += (i + 1);
+    letter += i;
     printf("\n");
   }
 
