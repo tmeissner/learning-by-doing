@@ -1,9 +1,8 @@
 SRC := $(shell ls *.c)
 
 
-
 %: %.c
-	gcc -Wall -Wextra $@.c -o $@
+	gcc -std=c11 -Wall -Wextra $@.c -o $@
 
 
 .PHONY: clean
